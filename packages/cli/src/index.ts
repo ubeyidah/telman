@@ -1,12 +1,5 @@
 import { Command } from "commander";
-
-type TelegramResponse = {
-  ok: boolean;
-  result?: {
-    message_id?: number;
-  };
-  description?: string;
-};
+import { sendTelegramMessage } from "telman-core";
 
 const program = new Command();
 
@@ -26,34 +19,28 @@ program
       process.exit(1);
     }
 
-    const res = await fetch(
-      `https://api.telegram.org/bot${token}/sendMessage`,
-      {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          chat_id: chatId,
-          text: message,
-        }),
-      },
-    );
-
-    const data = (await res.json()) as TelegramResponse;
-
-    if (!res.ok || !data.ok) {
-      const detail = data.description || res.statusText;
-      console.error(`Failed to send message: ${detail}`);
+    if (!chatId) {
+      console.error("Chat ID is required");
       process.exit(1);
     }
 
-    const messageId = data.result?.message_id;
+    if (!message) {
+      console.error("Message text is required");
+      process.exit(1);
+    }
 
-    console.log(`Sent Telegram message to chat ${chatId}`);
-
-    if (messageId !== undefined) {
-      console.log(`Telegram message ID: ${messageId}`);
+    try {
+      const result = await sendTelegramMessage({
+        botToken: token,
+        chatId,
+        message,
+      });
+      console.log(`Sent Telegram message to chat ${result.chatId}`);
+      console.log(`Telegram message ID: ${result.messageId}`);
+    } catch (error) {
+      const detial = error instanceof Error ? error.message : String(error);
+      console.error(`Failed to send message: ${detial}`);
+      process.exit(1);
     }
   });
 
