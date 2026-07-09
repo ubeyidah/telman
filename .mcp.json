@@ -1,0 +1,12 @@
+{
+  "mcpServers": {
+    "telman": {
+      "type": "stdio",
+      "command": "bun",
+      "args": ["run", "dev:local-mcp"],
+      "env": {
+        "TELEGRAM_BOT_TOKEN": ""
+      }
+    }
+  }
+}
