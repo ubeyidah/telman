@@ -9,10 +9,11 @@
   "dependencies": {
     "@modelcontextprotocol/sdk": "^1.29.0",
     "hono": "^4.12.28",
-    "@telmanorg/core": "workspace:*"
+    "@telmanorg/core": "0.0.0"
   },
   "scripts": {
-     "start": "bun run src/index.ts"
+     "start": "bun run src/index.ts",
+     "build": "bun run build"
   },
   "devDependencies": {
     "@types/node": "^26.1.1"
