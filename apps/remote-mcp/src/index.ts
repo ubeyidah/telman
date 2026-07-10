@@ -58,4 +58,7 @@ app.notFound((c) => c.json({ error: "Not Found" }, 404));
 
 const port = Number(process.env.PORT || 3000);
 
-export default handle(app);
+export default {
+  port,
+  fetch: app.fetch,
+};
