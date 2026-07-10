@@ -1,11 +1,11 @@
 {
-  "name": "telman",
+  "name": "@telmanorg/telman",
   "version": "0.0.0",
   "private": true,
   "type": "module",
   "dependencies": {
     "commander": "^15.0.0",
-    "telman-core": "workspace:*",
+    "@telmanorg/core": "workspace:*",
     "zod": "^4.4.3"
   }
 }

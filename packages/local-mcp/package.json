@@ -1,5 +1,5 @@
 {
-  "name": "telman-mcp",
+  "name": "@telmanorg/mcp",
   "version": "0.0.0",
   "private": true,
   "type": "module",
@@ -8,7 +8,7 @@
   },
   "dependencies": {
     "@modelcontextprotocol/sdk": "^1.29.0",
-    "telman-core": "workspace:*",
+    "@telmanorg/core": "workspace:*",
     "zod": "^4.4.3"
   }
 }

@@ -1,5 +1,5 @@
 import { Command } from "commander";
-import { sendTelegramMessage } from "telman-core";
+import { sendTelegramMessage } from "@telmanorg/core";
 import { homedir } from "node:os";
 import { dirname, join } from "node:path";
 import { existsSync, mkdirSync, readFileSync, writeFileSync } from "node:fs";
@@ -14,21 +14,32 @@ const cliConfigSchema = z.object({
 function writeTelegramBotToken(token: string) {
   mkdirSync(dirname(configPath), { recursive: true });
 
-  writeFileSync(configPath, JSON.stringify({ telegramBotToken: token }, null, 2), {
-    encoding: "utf-8",
-    mode: "0o600",
-  });
+  writeFileSync(
+    configPath,
+    JSON.stringify({ telegramBotToken: token }, null, 2),
+    {
+      encoding: "utf-8",
+      mode: "0o600",
+    },
+  );
 }
 
 function getTelegramBotToken() {
   if (!existsSync(configPath)) {
-    throw new Error("Telegram bot token is not set. Please run 'telman init' to set it.");
+    throw new Error(
+      "Telegram bot token is not set. Please run 'telman init' to set it.",
+    );
   }
-  const config = cliConfigSchema.parse(JSON.parse(readFileSync(configPath, "utf-8")));
+  const config = cliConfigSchema.parse(
+    JSON.parse(readFileSync(configPath, "utf-8")),
+  );
   return config.telegramBotToken;
 }
 
-program.name("telman").description("A CLI tool for sending telegram message").version("0.0.0");
+program
+  .name("telman")
+  .description("A CLI tool for sending telegram message")
+  .version("0.0.0");
 
 program
   .command("init")
