@@ -20,6 +20,7 @@
     "dev:cli": "bun run packages/cli/src/index.ts",
     "dev:remote-mcp": "bun run apps/remote-mcp/src/index.ts",
     "dev:local-mcp": "bun run packages/local-mcp/src/index.ts",
+    "build:all": "turbo run build",
     "type-check": "tsc --noEmit"
   },
   "devDependencies": {
@@ -27,6 +28,8 @@
     "oxfmt": "^0.58.0",
     "oxlint": "^1.73.0",
     "tsdown": "^0.22.4",
+    "turbo": "^2.10.4",
     "typescript": "^7.0.2"
-  }
+  },
+  "packageManager": "bun@1.3.0"
 }
