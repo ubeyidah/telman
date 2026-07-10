@@ -11,6 +11,9 @@
     "hono": "^4.12.28",
     "@telmanorg/core": "workspace:*"
   },
+  "scripts": {
+     "start": "bun run src/index.ts"
+  },
   "devDependencies": {
     "@types/node": "^26.1.1"
   }
