@@ -1,4 +1,5 @@
 import { Hono } from "hono";
+import { handle } from "hono/vercel";
 import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
 import { WebStandardStreamableHTTPServerTransport } from "@modelcontextprotocol/sdk/server/webStandardStreamableHttp.js";
 import { messageInputSchema, sendTelegramMessage } from "@telmanorg/core";
@@ -57,7 +58,4 @@ app.notFound((c) => c.json({ error: "Not Found" }, 404));
 
 const port = Number(process.env.PORT || 3000);
 
-export default {
-  port,
-  fetch: app.fetch,
-};
+export default handle(app);
