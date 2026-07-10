@@ -7,9 +7,7 @@ import {
   type MessageOptions,
 } from "./schema";
 
-export async function sendTelegramMessage(
-  input: MessageOptions,
-): Promise<MessageOutput> {
+export async function sendTelegramMessage(input: MessageOptions): Promise<MessageOutput> {
   const parsedInput = messageOptionsSchema.parse(input);
 
   const requestBody = sendMessageReqSchema.parse({
@@ -17,16 +15,13 @@ export async function sendTelegramMessage(
     text: parsedInput.message,
   });
 
-  const res = await fetch(
-    `https://api.telegram.org/bot${parsedInput.botToken}/sendMessage`,
-    {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(requestBody),
+  const res = await fetch(`https://api.telegram.org/bot${parsedInput.botToken}/sendMessage`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
     },
-  );
+    body: JSON.stringify(requestBody),
+  });
 
   const data = sendMessageResSchema.parse(await res.json());
 
