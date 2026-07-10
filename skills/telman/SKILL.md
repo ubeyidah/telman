@@ -9,7 +9,7 @@ telman sends Telegram messages from the agent to a specified chat. It supports t
 
 ## Mode 1: MCP tool (preferred)
 
-Use the `telman_telegram` MCP tool directly when available. This is the simplest path — it reads the bot token from the configured environment.
+Use the `telman_telegram` MCP tool directly. This is the simplest path — it reads the bot token from the configured environment and sends the message in one call.
 
 The tool accepts:
 - `chatId` — the Telegram chat ID (string, required)
@@ -17,18 +17,18 @@ The tool accepts:
 
 If the tool is not available, fall back to the CLI.
 
-## Mode 2: CLI fallback
+## Mode 2: CLI
 
-Run the CLI via the project's dev script:
+Run the installed `telman` command:
 
 ```bash
-bun run dev:cli telegram <chatId> <message>
+telman telegram <chatId> <message>
 ```
 
-This requires the bot token to be configured first via:
+This requires the bot token to be configured first:
 
 ```bash
-bun run dev:cli init --telegram-bot-token <token>
+telman init --telegram-bot-token <token>
 ```
 
 The token is stored in `~/.config/telman/config.json`.
@@ -39,15 +39,15 @@ The bot token comes from one of:
 
 | Source | Where | Used by |
 |--------|-------|---------|
-| `TELEGRAM_BOT_TOKEN` env var | `.env`, `opencode.json`, or `.mcp.json` | MCP tool |
-| `telman init --telegram-bot-token <token>` | `~/.config/telman/config.json` | CLI fallback |
+| `TELEGRAM_BOT_TOKEN` env var | environment or MCP config | MCP tool |
+| `telman init --telegram-bot-token <token>` | `~/.config/telman/config.json` | CLI |
 
 If the user hasn't set up a token yet, guide them to choose one method and configure it.
 
 ## Workflow
 
 1. **Check if MCP tool is available** — try calling `telman_telegram` with the user's `chatId` and `message`.
-2. **If MCP tool is not available**, use the CLI fallback instead.
+2. **If MCP tool is not available**, use the CLI instead.
 3. **If neither works**, tell the user they need to configure a bot token first and show them the relevant setup command.
 
 ## Finding a chat ID
