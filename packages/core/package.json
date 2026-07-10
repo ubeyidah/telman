@@ -1,13 +1,26 @@
 {
   "name": "@telmanorg/core",
   "version": "0.0.0",
-  "private": true,
+  "files": [
+    "dist"
+  ],
   "type": "module",
+  "main": "./dist/index.js",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
   "exports": {
-    ".": "./src/index.ts"
+    ".": {
+      "import": "./dist/index.js",
+      "types": "./dist/index.d.ts"
+    }
+  },
+  "publishConfig": {
+    "access": "public"
   },
   "scripts": {
-    "build": "tsdown"
+    "build": "tsdown",
+    "prepublishOnly": "bun run build",
+    "pack:dry": "bun run build && npm pack --dry-run"
   },
   "dependencies": {
     "zod": "^4.4.3"

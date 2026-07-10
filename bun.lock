@@ -27,6 +27,9 @@
     "packages/cli": {
       "name": "@telmanorg/telman",
       "version": "0.0.0",
+      "bin": {
+        "telman": "./dist/index.js",
+      },
       "dependencies": {
         "@telmanorg/core": "workspace:*",
         "commander": "^15.0.0",

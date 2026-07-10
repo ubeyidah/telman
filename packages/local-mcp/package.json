@@ -1,13 +1,26 @@
 {
   "name": "@telmanorg/mcp",
   "version": "0.0.0",
-  "private": true,
+  "bin": {
+    "telman-mcp": "./dist/index.js"
+  },
+  "files": [
+    "dist"
+  ],
   "type": "module",
+  "main": "./dist/index.js",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
   "exports": {
-    ".": "./src/index.ts"
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    }
   },
   "scripts": {
-    "build": "tsdown"
+    "build": "tsdown",
+    "prepublishOnly": "bun run build",
+    "pack:dry": "bun run build && bun pm pack --dry-run"
   },
   "dependencies": {
     "@modelcontextprotocol/sdk": "^1.29.0",

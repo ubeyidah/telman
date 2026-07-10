@@ -1,3 +1,4 @@
+#!/usr/bin/env node
 import { Command } from "commander";
 import { sendTelegramMessage } from "@telmanorg/core";
 import { homedir } from "node:os";
