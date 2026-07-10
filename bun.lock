@@ -8,12 +8,25 @@
         "@types/node": "^26.1.1",
       },
     },
+    "apps/remote-mcp": {
+      "name": "telman-remote-mcp",
+      "version": "0.0.0",
+      "dependencies": {
+        "@modelcontextprotocol/sdk": "^1.29.0",
+        "hono": "^4.12.28",
+        "telman-core": "workspace:*",
+      },
+      "devDependencies": {
+        "@types/node": "^26.1.1",
+      },
+    },
     "packages/cli": {
       "name": "telman",
       "version": "0.0.0",
       "dependencies": {
         "commander": "^15.0.0",
         "telman-core": "workspace:*",
+        "zod": "^4.4.3",
       },
       "devDependencies": {
         "@types/node": "^26.1.1",
@@ -212,6 +225,8 @@
     "telman-core": ["telman-core@workspace:packages/core"],
 
     "telman-mcp": ["telman-mcp@workspace:packages/local-mcp"],
+
+    "telman-remote-mcp": ["telman-remote-mcp@workspace:apps/remote-mcp"],
 
     "toidentifier": ["toidentifier@1.0.1", "", {}, "sha512-o5sSPKEkg/DIQNmH43V0/uerLrpzVedkUh8tGNvaeXpfpuwjKenlSox/2O/BTlZUtEe+JG7s5YhEz608PlAHRA=="],
 

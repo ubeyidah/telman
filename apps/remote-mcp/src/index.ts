@@ -1,0 +1,63 @@
+import { Hono } from "hono";
+import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
+import { WebStandardStreamableHTTPServerTransport } from "@modelcontextprotocol/sdk/server/webStandardStreamableHttp.js";
+import { messageInputSchema, sendTelegramMessage } from "telman-core";
+
+function createServer(botToken: string) {
+  const server = new McpServer({
+    name: "telman-local",
+    version: "0.0.0",
+  });
+  server.registerTool(
+    "telegram",
+    {
+      title: "Telegram",
+      description: "send messages to a telegram bot",
+      inputSchema: messageInputSchema.shape,
+    },
+    async (input) => {
+      const result = await sendTelegramMessage({ ...input, botToken });
+
+      return {
+        content: [
+          {
+            type: "text",
+            text: `Message sent to Telegram bot: ${result.messageId} to chat ${result.chatId}`,
+          },
+        ],
+        structuredContent: result,
+      };
+    },
+  );
+
+  return server;
+}
+
+const app = new Hono();
+
+app.post("/:botToken/mcp", async (c) => {
+  const botToken = c.req.param("botToken");
+  const server = createServer(botToken);
+
+  const transport = new WebStandardStreamableHTTPServerTransport({
+    sessionIdGenerator: undefined,
+    enableJsonResponse: true,
+  });
+
+  server.connect(transport);
+
+  try {
+    return await transport.handleRequest(c.req.raw);
+  } finally {
+    await server.close();
+  }
+});
+
+app.notFound((c) => c.json({ error: "Not Found" }, 404));
+
+const port = Number(process.env.PORT || 3000);
+
+export default {
+  port,
+  fetch: app.fetch,
+};
