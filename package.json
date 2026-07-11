@@ -23,7 +23,7 @@
     "build:all": "turbo run build",
     "type-check": "tsc --noEmit",
     "version": "changeset version",
-    "release": "changeset publish --access public"
+    "release": "changeset publish"
   },
   "devDependencies": {
     "@changesets/changelog-github": "^0.7.0",
