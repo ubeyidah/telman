@@ -13,10 +13,10 @@ function createServer({ botToken, chatId }: { botToken: string; chatId: string }
     {
       title: "Telegram",
       description: "send messages to a telegram bot",
-      inputSchema: messageInputSchema.pick({message: true}).shape,
+      inputSchema: messageInputSchema.pick({ message: true }).shape,
     },
-    async ({message}) => {
-      const result = await sendTelegramMessage({ message, botToken , chatId});
+    async ({ message }) => {
+      const result = await sendTelegramMessage({ message, botToken, chatId });
 
       return {
         content: [

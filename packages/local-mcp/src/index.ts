@@ -30,7 +30,7 @@ server.registerTool(
   {
     title: "Telegram",
     description: "send messages to a telegram bot",
-    inputSchema: messageInputSchema.pick({message: true}).shape,
+    inputSchema: messageInputSchema.pick({ message: true }).shape,
   },
   async ({ message }) => {
     const { token, chatId } = getTelegramBotToken();
