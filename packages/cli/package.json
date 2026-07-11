@@ -1,13 +1,19 @@
 {
   "name": "@telmanorg/telman",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "bin": {
     "telman": "./dist/index.js"
   },
   "files": [
     "dist"
   ],
-  "keywords": ["telman", "telegram", "cli", "messaging", "bot"],
+  "keywords": [
+    "telman",
+    "telegram",
+    "cli",
+    "messaging",
+    "bot"
+  ],
   "type": "module",
   "main": "./dist/index.js",
   "module": "./dist/index.js",
