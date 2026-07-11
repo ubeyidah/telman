@@ -10,18 +10,18 @@ program
   .command("init")
   .description("Configure telman ClI local settings")
   .requiredOption("--telegram-bot-token <botToken>", "Telegram bot token")
-  .action(async (options: { telegramBotToken: string }) => {
-    writeTelegramBotToken(options.telegramBotToken);
-    console.log("Telegram bot token saved successfully.");
+  .requiredOption("--telegram-chat-id <chatId>", "Telegram chatId")
+  .action(async (options: { telegramBotToken: string; telegramChatId: string }) => {
+    writeTelegramBotToken({ token: options.telegramBotToken, chatId: options.telegramChatId });
+    console.log("Telegram bot config saved successfully.");
   });
 
 program
   .command("telegram")
   .description("send a telegram message")
-  .argument("<chatId>", "Telegram chat id")
   .argument("<message>", "Message text to send")
-  .action(async (chatId: string, message: string) => {
-    const token = getTelegramBotToken();
+  .action(async (message: string) => {
+    const { telegramBotToken: token, telegramChatId: chatId } = getTelegramBotToken();
 
     const result = await sendTelegramMessage({
       botToken: token,

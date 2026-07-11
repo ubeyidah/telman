@@ -9,11 +9,9 @@ telman sends Telegram messages from the agent to a specified chat. It supports t
 
 ## Mode 1: MCP tool (preferred)
 
-Use the `telman_telegram` MCP tool directly. This is the simplest path — it reads the bot token from the configured environment and sends the message in one call.
+Use the `telman_telegram` MCP tool directly. It reads the bot token and chat ID from configured environment variables and sends the message in one call.
 
 The tool accepts:
-
-- `chatId` — the Telegram chat ID (string, required)
 - `message` — the message text to send (string, required)
 
 If the tool is not available, fall back to the CLI.
@@ -23,33 +21,35 @@ If the tool is not available, fall back to the CLI.
 Run the installed `telman` command:
 
 ```bash
-telman telegram <chatId> <message>
+telman telegram <message>
 ```
 
-This requires the bot token to be configured first:
+This requires the bot token and chat ID to be configured first:
 
 ```bash
-telman init --telegram-bot-token <token>
+telman init --telegram-bot-token <token> --telegram-chat-id <chatId>
 ```
 
-The token is stored in `~/.config/telman/config.json`.
+The config is stored in `~/.config/telman/config.json`.
 
 ## Configuration
 
-The bot token comes from one of:
+The bot token and chat ID come from one of:
 
-| Source                                     | Where                          | Used by  |
-| ------------------------------------------ | ------------------------------ | -------- |
-| `TELEGRAM_BOT_TOKEN` env var               | environment or MCP config      | MCP tool |
-| `telman init --telegram-bot-token <token>` | `~/.config/telman/config.json` | CLI      |
+| Setting        | Source                                | Used by  |
+| -------------- | ------------------------------------- | -------- |
+| Bot token      | `TELEGRAM_BOT_TOKEN` env var          | MCP tool |
+| Bot token      | `telman init --telegram-bot-token`    | CLI      |
+| Chat ID        | `TELEGRAM_CHAT_ID` env var            | MCP tool |
+| Chat ID        | `telman init --telegram-chat-id`      | CLI      |
 
-If the user hasn't set up a token yet, guide them to choose one method and configure it.
+If the user hasn't configured these yet, guide them to choose one method and set up both the bot token and chat ID.
 
 ## Workflow
 
-1. **Check if MCP tool is available** — try calling `telman_telegram` with the user's `chatId` and `message`.
+1. **Check if MCP tool is available** — try calling `telman_telegram` with the user's `message`.
 2. **If MCP tool is not available**, use the CLI instead.
-3. **If neither works**, tell the user they need to configure a bot token first and show them the relevant setup command.
+3. **If neither works**, tell the user they need to configure a bot token and chat ID first and show them the relevant setup command.
 
 ## Finding a chat ID
 

@@ -3,7 +3,7 @@ import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
 import { WebStandardStreamableHTTPServerTransport } from "@modelcontextprotocol/sdk/server/webStandardStreamableHttp.js";
 import { messageInputSchema, sendTelegramMessage } from "@telmanorg/core";
 
-function createServer(botToken: string) {
+function createServer({ botToken, chatId }: { botToken: string; chatId: string }) {
   const server = new McpServer({
     name: "telman-local",
     version: "0.0.0",
@@ -13,10 +13,10 @@ function createServer(botToken: string) {
     {
       title: "Telegram",
       description: "send messages to a telegram bot",
-      inputSchema: messageInputSchema.shape,
+      inputSchema: messageInputSchema.pick({ message: true }).shape,
     },
-    async (input) => {
-      const result = await sendTelegramMessage({ ...input, botToken });
+    async ({ message }) => {
+      const result = await sendTelegramMessage({ message, botToken, chatId });
 
       return {
         content: [
@@ -35,9 +35,10 @@ function createServer(botToken: string) {
 
 const app = new Hono();
 
-app.post("/:botToken/mcp", async (c) => {
+app.post("/:botToken/:chatId/mcp", async (c) => {
   const botToken = c.req.param("botToken");
-  const server = createServer(botToken);
+  const chatId = c.req.param("chatId");
+  const server = createServer({ botToken, chatId });
 
   const transport = new WebStandardStreamableHTTPServerTransport({
     sessionIdGenerator: undefined,
