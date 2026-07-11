@@ -1,5 +1,14 @@
 # @telmanorg/mcp
 
+## 0.1.2
+
+### Patch Changes
+
+- [`0a6a0a7`](https://github.com/ubeyidah/telman/commit/0a6a0a7ec2c1cfba55f604b1befb4e42f5419f24) Thanks [@ubeyidah](https://github.com/ubeyidah)! - fix the auto repalcement of local shard packages with bun publish
+
+- Updated dependencies [[`0a6a0a7`](https://github.com/ubeyidah/telman/commit/0a6a0a7ec2c1cfba55f604b1befb4e42f5419f24)]:
+  - @telmanorg/core@0.0.2
+
 ## 0.1.1
 
 ### Patch Changes
