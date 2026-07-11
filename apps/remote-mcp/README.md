@@ -1,50 +1,43 @@
 # telman-remote-mcp
 
-HTTP-based remote MCP server for Telegram. Deploy to Vercel and connect from any MCP client over the internet.
+HTTP-based remote MCP server for Telegram. Deployable to Vercel.
 
-## How it works
+Built with [Hono](https://hono.dev) and the [MCP SDK](https://github.com/modelcontextprotocol/typescript-sdk).
 
-A [Hono](https://honojs.dev/) server that creates a per-request MCP server using `@modelcontextprotocol/sdk` with Streamable HTTP transport. The bot token and chat ID are passed as URL path parameters so each client can use its own credentials.
+## Deploy to Vercel
 
-## Deploy
-
-[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/ubeyidah/telman)
-
-Or manually:
-
-```bash
+```sh
 vercel deploy
 ```
 
-The `vercel.json` is already configured — just connect your GitHub repo.
+The `vercel.json` is already configured — no build setup needed.
 
-## Usage
-
-### Endpoint
+## Endpoint
 
 ```
 POST /:botToken/:chatId/mcp
 ```
 
-### With MCP clients
+The bot token and chat ID are passed as URL path parameters. Each request creates a fresh MCP server instance, registers the `telegram` tool, and handles the session via Streamable HTTP transport.
 
-Point your MCP client to the deployed URL with Streamable HTTP or SSE transport:
+### Example
 
-```json
-{
-  "mcpServers": {
-    "telman-remote": {
-      "type": "http",
-      "url": "https://your-app.vercel.app/YOUR_BOT_TOKEN/YOUR_CHAT_ID/mcp"
-    }
-  }
-}
+```
+curl -X POST "https://your-app.vercel.app/123:abc/123456/mcp" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "jsonrpc": "2.0",
+    "method": "tools/call",
+    "params": {
+      "name": "telegram",
+      "arguments": { "message": "Hello from remote MCP!" }
+    },
+    "id": 1
+  }'
 ```
 
-> **Security note:** The bot token and chat ID are part of the URL path. Treat the URL as sensitive — anyone with the URL can send messages using your bot.
+## Usage with MCP clients
 
-### Tool
+Point your MCP client to the remote URL using SSE or Streamable HTTP transport.
 
-**`telegram`** — Send a message to the configured Telegram chat.
-
-Input: `{ message: string }`
+> **Note:** Bot token and chat ID are part of the URL path. Keep the URL private or use appropriate access controls (e.g. Vercel deployment protection, auth proxy).

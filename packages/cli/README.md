@@ -1,31 +1,38 @@
 # @telmanorg/telman
 
-CLI tool for sending Telegram messages from the command line.
+CLI tool for sending Telegram messages from the terminal.
 
 ## Install
 
-```bash
+```sh
 bun add -g @telmanorg/telman
 ```
 
-## Usage
+## Commands
 
-### Configure
+### `telman init`
 
-```bash
-telman init --telegram-bot-token YOUR_TOKEN --telegram-chat-id YOUR_CHAT_ID
+Store your bot token and chat ID locally.
+
+```sh
+telman init --telegram-bot-token <token> --telegram-chat-id <chatId>
 ```
 
-Config is stored in `~/.config/telman/config.json`.
+Config is saved to `~/.config/telman/config.json` with restricted permissions (`0o600`).
 
-### Send a message
+### `telman telegram <message>`
 
-```bash
-telman telegram "Hello from telman!"
+Send a Telegram message using saved credentials.
+
+```sh
+telman telegram "Hello from the terminal!"
 ```
 
-### One-liner
+## Configuration
 
-```bash
-telman init --telegram-bot-token $TOKEN --telegram-chat-id $CHAT_ID && telman telegram "Hello!"
-```
+| Option | Env var | Config file |
+|---|---|---|
+| Bot token | `TELEGRAM_BOT_TOKEN` | `~/.config/telman/config.json` (`telegramBotToken`) |
+| Chat ID | `TELEGRAM_CHAT_ID` | `~/.config/telman/config.json` (`telegramChatId`) |
+
+If not configured, run `telman init` first.

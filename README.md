@@ -2,20 +2,20 @@
 
 Telegram messaging toolkit for agents, CLIs, and MCP.
 
-telman lets you send Telegram messages from anywhere — the command line, AI agents (via MCP), or programmatically via a simple API.
+Send Telegram messages from anywhere — terminal, AI agent, or MCP client.
 
 ## Packages
 
 | Package | Description |
 |---|---|
-| [`@telmanorg/core`](packages/core) | Zod schemas + Telegram Bot API client |
-| [`@telmanorg/telman`](packages/cli) | CLI tool (`telman telegram <message>`) |
-| [`@telmanorg/mcp`](packages/local-mcp) | Local MCP server (stdio transport) |
-| [`telman-remote-mcp`](apps/remote-mcp) | Remote MCP server (HTTP, deployable to Vercel) |
+| [`@telmanorg/core`](./packages/core) | Zod schemas + Telegram Bot API client |
+| [`@telmanorg/telman`](./packages/cli) | CLI tool for sending messages |
+| [`@telmanorg/mcp`](./packages/local-mcp) | Local stdio MCP server |
+| [`telman-remote-mcp`](./apps/remote-mcp) | Remote HTTP MCP server (Vercel) |
 
-## Quick start
+## Quick Start
 
-```bash
+```sh
 git clone https://github.com/ubeyidah/telman.git
 cd telman
 bun install
@@ -24,17 +24,42 @@ bun run build:all
 
 ## CLI
 
-```bash
-# configure once
-telman init --telegram-bot-token $TOKEN --telegram-chat-id $CHAT_ID
+```sh
+# Configure once
+telman init --telegram-bot-token <token> --telegram-chat-id <chatId>
 
-# send messages
+# Send a message
 telman telegram "Hello from telman!"
 ```
 
+## Configuration
+
+telman supports config sources:
+
+`telman init` → `~/.config/telman/config.json` 
+
 ## Local MCP
 
-Add to your MCP client config (`.mcp.json` or `opencode.json`):
+Run a local stdio MCP server that exposes the `telegram` tool.
+
+### OpenCode (`opencode.json`)
+
+```json
+{
+  "mcp": {
+    "telman": {
+      "type": "local",
+      "command": ["bun", "x", "-y", "run", "@telmanorg/mcp"],
+      "environment": {
+        "TELEGRAM_BOT_TOKEN": "",
+        "TELEGRAM_CHAT_ID": ""
+      }
+    }
+  }
+}
+```
+
+### Claude code (`.mcp.json`)
 
 ```json
 {
@@ -42,7 +67,7 @@ Add to your MCP client config (`.mcp.json` or `opencode.json`):
     "telman": {
       "type": "stdio",
       "command": "bun",
-      "args": ["run", "dev:local-mcp"],
+      "args": ["x", "-y", "run", "@telmanorg/mcp"],
       "env": {
         "TELEGRAM_BOT_TOKEN": "",
         "TELEGRAM_CHAT_ID": ""
@@ -54,47 +79,42 @@ Add to your MCP client config (`.mcp.json` or `opencode.json`):
 
 ## Remote MCP
 
-Deploy to Vercel, then point your MCP client to the endpoint:
+Deploy the remote MCP server to Vercel for HTTP-based access.
 
-```
-POST /:botToken/:chatId/mcp
-```
-
-```json
-{
-  "mcpServers": {
-    "telman-remote": {
-      "type": "http",
-      "url": "https://your-app.vercel.app/BOT_TOKEN/CHAT_ID/mcp"
-    }
-  }
-}
+```sh
+cd apps/remote-mcp
+vercel deploy
 ```
 
-## Configuration
+Endpoint: `POST /:botToken/:chatId/mcp`
 
-telman reads credentials from environment variables or a local config file.
-
-| Setting | Source |
-|---|---|
-| Bot token | `TELEGRAM_BOT_TOKEN` env var |
-| Chat ID | `TELEGRAM_CHAT_ID` env var |
-| CLI config | `~/.config/telman/config.json` (set via `telman init`) |
+See [`apps/remote-mcp`](./apps/remote-mcp) for details.
 
 ## Development
 
-```bash
-# build all packages
-bun run build:all
+```sh
+bun run build:all    # build all packages
+bun run dev:cli      # run CLI in dev mode
+bun run dev:local-mcp # run local MCP in dev mode
+bun run dev:remote-mcp # run remote MCP in dev mode
+bun run lint         # lint
+bun run format       # format code
+bun run type-check   # type check
+```
 
-# run a single package in dev
-bun run dev:cli
-bun run dev:local-mcp
-bun run dev:remote-mcp
+## Monorepo
 
-# format & lint
-bun run format
-bun run lint
+This is a [Bun workspace](https://bun.sh/docs/install/workspaces) monorepo using [Turborepo](https://turbo.build) for task orchestration.
+
+```
+telman/
+├── apps/
+│   └── remote-mcp/     # Remote MCP (Hono, Vercel)
+├── packages/
+│   ├── core/           # Core library (schemas, API client)
+│   ├── cli/            # CLI tool (commander)
+│   └── local-mcp/      # Local MCP server (stdio)
+└── package.json
 ```
 
 ## License

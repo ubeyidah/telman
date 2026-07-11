@@ -4,6 +4,7 @@
   "files": [
     "dist"
   ],
+  "keywords": ["telegram", "bot", "api", "zod", "schema", "messaging"],
   "type": "module",
   "main": "./dist/index.js",
   "module": "./dist/index.js",

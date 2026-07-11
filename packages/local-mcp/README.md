@@ -1,10 +1,10 @@
 # @telmanorg/mcp
 
-Stdio-based MCP server that exposes a `telegram` tool for sending messages via Telegram.
+Stdio-based [MCP](https://modelcontextprotocol.io) server that exposes a `telegram` tool for sending messages.
 
 ## Install
 
-```bash
+```sh
 bun add -g @telmanorg/mcp
 ```
 
@@ -12,24 +12,32 @@ bun add -g @telmanorg/mcp
 
 Set these environment variables:
 
-| Variable | Description |
-|---|---|
-| `TELEGRAM_BOT_TOKEN` | Your Telegram bot token |
-| `TELEGRAM_CHAT_ID` | Target chat or channel ID |
+```sh
+TELEGRAM_BOT_TOKEN="your-bot-token"
+TELEGRAM_CHAT_ID="your-chat-id"
+```
 
-## Usage with MCP clients
+Or run with inline env:
 
-### OpenCode
+```sh
+TELEGRAM_BOT_TOKEN="..." TELEGRAM_CHAT_ID="..." telman-mcp
+```
 
-Add to `opencode.json`:
+## Integration
+
+
+## Local MCP
+
+Run a local stdio MCP server that exposes the `telegram` tool.
+
+### OpenCode (`opencode.json`)
 
 ```json
 {
   "mcp": {
     "telman": {
       "type": "local",
-      "command": ["bun", "run", "dev:local-mcp"],
-      "enabled": true,
+      "command": ["bun", "x", "-y", "run", "@telmanorg/mcp"],
       "environment": {
         "TELEGRAM_BOT_TOKEN": "",
         "TELEGRAM_CHAT_ID": ""
@@ -39,9 +47,7 @@ Add to `opencode.json`:
 }
 ```
 
-### Generic editor / IDE
-
-Add to `.mcp.json`:
+### Claude code (`.mcp.json`)
 
 ```json
 {
@@ -49,7 +55,7 @@ Add to `.mcp.json`:
     "telman": {
       "type": "stdio",
       "command": "bun",
-      "args": ["run", "dev:local-mcp"],
+      "args": ["x", "-y", "run", "@telmanorg/mcp"],
       "env": {
         "TELEGRAM_BOT_TOKEN": "",
         "TELEGRAM_CHAT_ID": ""
@@ -59,29 +65,12 @@ Add to `.mcp.json`:
 }
 ```
 
-Or point directly at the installed binary:
 
-```json
-{
-  "mcpServers": {
-    "telman": {
-      "type": "stdio",
-      "command": "telman-mcp",
-      "env": {
-        "TELEGRAM_BOT_TOKEN": "",
-        "TELEGRAM_CHAT_ID": ""
-      }
-    }
-  }
-}
-```
 
-## Tool
+## Tool: `telegram`
 
-### `telegram`
+| Parameter | Type | Description |
+|---|---|---|
+| `message` | `string` | Message text to send |
 
-Sends a text message to the configured Telegram chat.
-
-**Input:** `{ message: string }`
-
-**Output:** Confirmation with `messageId` and `chatId`.
+Returns the message ID and chat ID on success.
