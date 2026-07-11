@@ -1,13 +1,19 @@
 {
   "name": "@telmanorg/mcp",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "bin": {
     "telman-mcp": "./dist/index.js"
   },
   "files": [
     "dist"
   ],
-  "keywords": ["telman", "telegram", "mcp", "model-context-protocol", "bot"],
+  "keywords": [
+    "telman",
+    "telegram",
+    "mcp",
+    "model-context-protocol",
+    "bot"
+  ],
   "type": "module",
   "main": "./dist/index.js",
   "module": "./dist/index.js",
