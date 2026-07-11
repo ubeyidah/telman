@@ -5,7 +5,8 @@
       "command": "bun",
       "args": ["run", "dev:local-mcp"],
       "env": {
-        "TELEGRAM_BOT_TOKEN": ""
+        "TELEGRAM_BOT_TOKEN": "",
+        "TELEGRAM_CHAT_ID": ""
       }
     }
   }
