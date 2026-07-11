@@ -1,6 +1,6 @@
 {
   "name": "@telmanorg/telman",
-  "version": "0.0.2",
+  "version": "0.1.0",
   "bin": {
     "telman": "./dist/index.js"
   },
