@@ -23,8 +23,8 @@
     "pack:dry": "bun run build && bun pm pack --dry-run"
   },
   "dependencies": {
-    "commander": "^15.0.0",
     "@telmanorg/core": "workspace:*",
+    "commander": "^15.0.0",
     "zod": "^4.4.3"
   }
 }
