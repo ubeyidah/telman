@@ -12,6 +12,7 @@ telman sends Telegram messages from the agent to a specified chat. It supports t
 Use the `telman_telegram` MCP tool directly. This is the simplest path — it reads the bot token from the configured environment and sends the message in one call.
 
 The tool accepts:
+
 - `chatId` — the Telegram chat ID (string, required)
 - `message` — the message text to send (string, required)
 
@@ -37,10 +38,10 @@ The token is stored in `~/.config/telman/config.json`.
 
 The bot token comes from one of:
 
-| Source | Where | Used by |
-|--------|-------|---------|
-| `TELEGRAM_BOT_TOKEN` env var | environment or MCP config | MCP tool |
-| `telman init --telegram-bot-token <token>` | `~/.config/telman/config.json` | CLI |
+| Source                                     | Where                          | Used by  |
+| ------------------------------------------ | ------------------------------ | -------- |
+| `TELEGRAM_BOT_TOKEN` env var               | environment or MCP config      | MCP tool |
+| `telman init --telegram-bot-token <token>` | `~/.config/telman/config.json` | CLI      |
 
 If the user hasn't set up a token yet, guide them to choose one method and configure it.
 
@@ -53,5 +54,6 @@ If the user hasn't set up a token yet, guide them to choose one method and confi
 ## Finding a chat ID
 
 If the user doesn't know their Telegram chat ID:
+
 - Tell them to message `@userinfobot` on Telegram to get their ID.
 - For group chats, add `@getidsbot` to the group.
