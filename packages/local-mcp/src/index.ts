@@ -10,12 +10,19 @@ const server = new McpServer({
 
 function getTelegramBotToken() {
   const token = process.env.TELEGRAM_BOT_TOKEN;
+  const chatId = process.env.TELEGRAM_CHAT_ID;
 
   if (!token) {
     throw new Error("TELEGRAM_BOT_TOKEN environment variable is not set");
   }
 
-  return token;
+  if (!chatId) {
+    throw new Error("TELEGRAM_CHAT_ID environment variable is not set");
+  }
+  return {
+    token,
+    chatId,
+  };
 }
 
 server.registerTool(
@@ -23,11 +30,11 @@ server.registerTool(
   {
     title: "Telegram",
     description: "send messages to a telegram bot",
-    inputSchema: messageInputSchema.shape,
+    inputSchema: messageInputSchema.pick({message: true}).shape,
   },
-  async (input) => {
-    const botToken = getTelegramBotToken();
-    const result = await sendTelegramMessage({ ...input, botToken });
+  async ({ message }) => {
+    const { token, chatId } = getTelegramBotToken();
+    const result = await sendTelegramMessage({ message, botToken: token, chatId });
 
     return {
       content: [
