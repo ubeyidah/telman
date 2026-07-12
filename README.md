@@ -13,9 +13,9 @@ Send Telegram messages from anywhere — terminal, AI agent, or MCP client.
 | [`@telmanorg/mcp`](./packages/local-mcp) | Local stdio MCP server |
 | [`telman-remote-mcp`](./apps/remote-mcp) | Remote HTTP MCP server (Vercel) |
 
-## OpenCode Skill
+## Agent Skill
 
-Install the telman agent skill for OpenCode:
+Install the telman skill for any skills-compatible coding agent:
 
 ```sh
 npx skills add https://github.com/ubeyidah/telman/tree/main/skills/telman
