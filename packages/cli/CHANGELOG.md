@@ -1,5 +1,11 @@
 # @telmanorg/telman
 
+## 0.1.4
+
+### Patch Changes
+
+- [#12](https://github.com/ubeyidah/telman/pull/12) [`dceb2c0`](https://github.com/ubeyidah/telman/commit/dceb2c01157491d3219ce73f6678a44cd1536e95) Thanks [@ubeyidah](https://github.com/ubeyidah)! - Read version from package.json instead of hardcoding 0.0.0
+
 ## 0.1.3
 
 ### Patch Changes
