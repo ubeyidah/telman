@@ -1,19 +1,39 @@
-# telman
+# Telman
 
-Telegram messaging toolkit for agents, CLIs, and MCP.
+A telegram messaging toolkit for agents, CLIs, and MCP. Send messages from anywhere — terminal, AI agent, or MCP client.
 
-Send Telegram messages from anywhere — terminal, AI agent, or MCP client.
+## Use cases
 
-## Packages
+- **Agent works while you sleep.** Assign a task before bed, the agent completes it and sends you a morning summary with status, PR links, and results.
+- **Step away from your desk.** The agent finishes the job and notifies you on Telegram with everything you need.
 
-| Package | Description |
-|---|---|
-| [`@telmanorg/core`](./packages/core) | Zod schemas + Telegram Bot API client |
-| [`@telmanorg/telman`](./packages/cli) | CLI tool for sending messages |
-| [`@telmanorg/mcp`](./packages/local-mcp) | Local stdio MCP server |
-| [`telman-remote-mcp`](./apps/remote-mcp) | Remote HTTP MCP server (Vercel) |
+## What's included
 
-## Agent Skill
+- **CLI** (`@telmanorg/telman`): send messages from the terminal, pipe output, use in scripts.
+- **Local MCP** (`@telmanorg/mcp`): stdio MCP server for AI coding tools like OpenCode, Claude Code, and Cursor.
+- **Remote MCP** (`telman-remote-mcp`): HTTP MCP server deployable to Vercel for remote access.
+
+## For humans (CLI)
+
+Install:
+
+```sh
+npm install -g @telmanorg/telman
+```
+
+Configure your bot token and chat ID:
+
+```sh
+telman init --telegram-bot-token <token> --telegram-chat-id <chatId>
+```
+
+Send a message:
+
+```sh
+telman telegram "Hello from the terminal!"
+```
+
+## For agents (Skill)
 
 Install the telman skill for any skills-compatible coding agent:
 
@@ -21,45 +41,20 @@ Install the telman skill for any skills-compatible coding agent:
 npx skills add https://github.com/ubeyidah/telman/tree/main/skills/telman
 ```
 
-Once installed, the agent can send Telegram messages using the `telman_telegram` tool. See [`skills/telman/SKILL.md`](./skills/telman/SKILL.md) for details.
+## Model Context Protocol
 
-## Quick Start
+### Local MCP
 
-```sh
-git clone https://github.com/ubeyidah/telman.git
-cd telman
-bun install
-bun run build:all
-```
+Configure telman as a local MCP tool in your coding tool of choice.
 
-## CLI
-
-```sh
-# Configure once
-telman init --telegram-bot-token <token> --telegram-chat-id <chatId>
-
-# Send a message
-telman telegram "Hello from telman!"
-```
-
-## Configuration
-
-telman supports config sources:
-
-`telman init` → `~/.config/telman/config.json` 
-
-## Local MCP
-
-Run a local stdio MCP server that exposes the `telegram` tool.
-
-### OpenCode (`opencode.json`)
+**OpenCode** (`opencode.json`):
 
 ```json
 {
   "mcp": {
     "telman": {
       "type": "local",
-      "command": ["bun", "x", "-y", "run", "@telmanorg/mcp"],
+      "command": ["npx", "-y", "run", "@telmanorg/mcp"],
       "environment": {
         "TELEGRAM_BOT_TOKEN": "",
         "TELEGRAM_CHAT_ID": ""
@@ -69,15 +64,15 @@ Run a local stdio MCP server that exposes the `telegram` tool.
 }
 ```
 
-### Claude code (`.mcp.json`)
+**Claude Code** (`.mcp.json`):
 
 ```json
 {
   "mcpServers": {
     "telman": {
       "type": "stdio",
-      "command": "bun",
-      "args": ["x", "-y", "run", "@telmanorg/mcp"],
+      "command": "npx",
+      "args": ["-y", "run", "@telmanorg/mcp"],
       "env": {
         "TELEGRAM_BOT_TOKEN": "",
         "TELEGRAM_CHAT_ID": ""
@@ -87,9 +82,29 @@ Run a local stdio MCP server that exposes the `telegram` tool.
 }
 ```
 
-## Remote MCP
+**Cursor** (`.cursor/mcp.json`):
 
-Deploy the remote MCP server to Vercel for HTTP-based access.
+```json
+{
+  "mcpServers": {
+    "telman": {
+      "type": "stdio",
+      "command": "npx",
+      "args": ["-y", "run", "@telmanorg/mcp"],
+      "env": {
+        "TELEGRAM_BOT_TOKEN": "",
+        "TELEGRAM_CHAT_ID": ""
+      }
+    }
+  }
+}
+```
+
+Fill in your `TELEGRAM_BOT_TOKEN` and `TELEGRAM_CHAT_ID` in the environment variables.
+
+### Remote MCP
+
+Deploy the remote MCP server to Vercel for HTTP-based access:
 
 ```sh
 cd apps/remote-mcp
@@ -103,29 +118,23 @@ See [`apps/remote-mcp`](./apps/remote-mcp) for details.
 ## Development
 
 ```sh
-bun run build:all    # build all packages
-bun run dev:cli      # run CLI in dev mode
-bun run dev:local-mcp # run local MCP in dev mode
-bun run dev:remote-mcp # run remote MCP in dev mode
-bun run lint         # lint
-bun run format       # format code
-bun run type-check   # type check
+git clone https://github.com/ubeyidah/telman.git
+cd telman
+bun install
+bun run build:all
 ```
 
-## Monorepo
+| Command | Description |
+|---|---|
+| `bun run build:all` | Build all packages |
+| `bun run dev:cli` | Run CLI in dev mode |
+| `bun run dev:local-mcp` | Run local MCP in dev mode |
+| `bun run dev:remote-mcp` | Run remote MCP in dev mode |
+| `bun run lint` | Lint |
+| `bun run format` | Format code |
+| `bun run type-check` | Type check |
 
 This is a [Bun workspace](https://bun.sh/docs/install/workspaces) monorepo using [Turborepo](https://turbo.build) for task orchestration.
-
-```
-telman/
-├── apps/
-│   └── remote-mcp/     # Remote MCP (Hono, Vercel)
-├── packages/
-│   ├── core/           # Core library (schemas, API client)
-│   ├── cli/            # CLI tool (commander)
-│   └── local-mcp/      # Local MCP server (stdio)
-└── package.json
-```
 
 ## License
 
