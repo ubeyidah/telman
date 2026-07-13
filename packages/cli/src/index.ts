@@ -2,9 +2,10 @@
 import { Command } from "commander";
 import { sendTelegramMessage } from "@telmanorg/core";
 import { getTelegramBotToken, writeTelegramBotToken } from "./config";
+import pkg from "../package.json" with { type: "json" };
 
 const program = new Command();
-program.name("telman").description("A CLI tool for sending telegram message").version("0.0.0");
+program.name("telman").description("A CLI tool for sending telegram message").version(pkg.version);
 
 program
   .command("init")

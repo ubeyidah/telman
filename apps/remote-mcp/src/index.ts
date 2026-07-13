@@ -2,11 +2,12 @@ import { Hono } from "hono";
 import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
 import { WebStandardStreamableHTTPServerTransport } from "@modelcontextprotocol/sdk/server/webStandardStreamableHttp.js";
 import { messageInputSchema, sendTelegramMessage } from "@telmanorg/core";
+import pkg from "../package.json" with { type: "json" };
 
 function createServer({ botToken, chatId }: { botToken: string; chatId: string }) {
   const server = new McpServer({
     name: "telman-local",
-    version: "0.0.0",
+    version: pkg.version,
   });
   server.registerTool(
     "telegram",
