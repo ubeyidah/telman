@@ -16,7 +16,7 @@ export function writeTelegramBotToken({ token, chatId }: { token: string; chatId
     JSON.stringify({ telegramBotToken: token, telegramChatId: chatId }, null, 2),
     {
       encoding: "utf-8",
-      mode: "0o600",
+      mode: 0o600,
     },
   );
 }
