@@ -1,19 +1,17 @@
-# telman
+# Telman
 
-Telegram messaging toolkit for agents, CLIs, and MCP. Send messages from anywhere — terminal, AI agent, or MCP client.
+A telegram messaging toolkit for agents, CLIs, and MCP. Send messages from anywhere — terminal, AI agent, or MCP client.
 
 ## Use cases
 
 - **Agent works while you sleep.** Assign a task before bed, the agent completes it and sends you a morning summary with status, PR links, and results.
 - **Step away from your desk.** The agent finishes the job and notifies you on Telegram with everything you need.
-- **CI/CD alerts.** Deployment pipeline pushes a notification straight to your phone.
-- **Script notifications.** Any script or cron job can ping you when it's done.
 
 ## What's included
 
-- **CLI** (`@telmanorg/telman`) — send messages from the terminal, pipe output, use in scripts.
-- **Local MCP** (`@telmanorg/mcp`) — stdio MCP server for AI coding tools like OpenCode, Claude Code, and Cursor.
-- **Remote MCP** (`telman-remote-mcp`) — HTTP MCP server deployable to Vercel for remote access.
+- **CLI** (`@telmanorg/telman`): send messages from the terminal, pipe output, use in scripts.
+- **Local MCP** (`@telmanorg/mcp`): stdio MCP server for AI coding tools like OpenCode, Claude Code, and Cursor.
+- **Remote MCP** (`telman-remote-mcp`): HTTP MCP server deployable to Vercel for remote access.
 
 ## For humans (CLI)
 
@@ -35,8 +33,6 @@ Send a message:
 telman telegram "Hello from the terminal!"
 ```
 
-You can also set `TELEGRAM_BOT_TOKEN` and `TELEGRAM_CHAT_ID` as environment variables instead.
-
 ## For agents (Skill)
 
 Install the telman skill for any skills-compatible coding agent:
@@ -44,8 +40,6 @@ Install the telman skill for any skills-compatible coding agent:
 ```sh
 npx skills add https://github.com/ubeyidah/telman/tree/main/skills/telman
 ```
-
-Once installed, the agent can send Telegram messages using the `telman_telegram` tool. The agent will use it automatically when you ask to send a notification.
 
 ## Model Context Protocol
 
@@ -60,7 +54,7 @@ Configure telman as a local MCP tool in your coding tool of choice.
   "mcp": {
     "telman": {
       "type": "local",
-      "command": ["bun", "x", "-y", "run", "@telmanorg/mcp"],
+      "command": ["npx", "-y", "run", "@telmanorg/mcp"],
       "environment": {
         "TELEGRAM_BOT_TOKEN": "",
         "TELEGRAM_CHAT_ID": ""
@@ -77,8 +71,8 @@ Configure telman as a local MCP tool in your coding tool of choice.
   "mcpServers": {
     "telman": {
       "type": "stdio",
-      "command": "bun",
-      "args": ["x", "-y", "run", "@telmanorg/mcp"],
+      "command": "npx",
+      "args": ["-y", "run", "@telmanorg/mcp"],
       "env": {
         "TELEGRAM_BOT_TOKEN": "",
         "TELEGRAM_CHAT_ID": ""
@@ -95,8 +89,8 @@ Configure telman as a local MCP tool in your coding tool of choice.
   "mcpServers": {
     "telman": {
       "type": "stdio",
-      "command": "bun",
-      "args": ["x", "-y", "run", "@telmanorg/mcp"],
+      "command": "npx",
+      "args": ["-y", "run", "@telmanorg/mcp"],
       "env": {
         "TELEGRAM_BOT_TOKEN": "",
         "TELEGRAM_CHAT_ID": ""
