@@ -1,5 +1,11 @@
 # @telmanorg/telman
 
+## 0.1.3
+
+### Patch Changes
+
+- [#10](https://github.com/ubeyidah/telman/pull/10) [`47b3965`](https://github.com/ubeyidah/telman/commit/47b3965766663659bd824d9319ff687780954587) Thanks [@ubeyidah](https://github.com/ubeyidah)! - fix: pass file mode as number not string in writeTelegramBotToken
+
 ## 0.1.2
 
 ### Patch Changes
